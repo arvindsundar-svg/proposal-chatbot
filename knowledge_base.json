@@ -1,0 +1,255 @@
+{
+  "proposal": {
+    "title": "AI Assurance & Deployment Programme",
+    "client": "EuroBank NV",
+    "prepared_by": "AI Assurance Practice",
+    "date": "March 2025",
+    "version": "2.1",
+    "confidentiality": "Confidential"
+  },
+  "sections": [
+    {
+      "id": "executive_summary",
+      "title": "Executive Summary",
+      "keywords": [
+        "summary",
+        "overview",
+        "about",
+        "proposal",
+        "programme",
+        "program",
+        "objective",
+        "goal",
+        "purpose",
+        "what is",
+        "tell me about"
+      ],
+      "content": "the vendor proposes a 12-month AI Assurance & Deployment Programme for EuroBank NV, designed to accelerate safe AI adoption across retail banking, risk, and compliance functions. The programme delivers three outcomes: a production-ready AI governance framework, validated AI models for fraud detection and customer service automation, and an embedded team of forward deployed engineers working alongside EuroBank's internal AI team. Total investment is \u20ac2.4M with an expected ROI of 340% over 3 years driven by fraud reduction, operational savings, and faster time-to-market for AI features."
+    },
+    {
+      "id": "problem_statement",
+      "title": "The Problem We Are Solving",
+      "keywords": [
+        "problem",
+        "challenge",
+        "issue",
+        "pain",
+        "why",
+        "current state",
+        "today",
+        "situation",
+        "gap"
+      ],
+      "content": "EuroBank has 14 AI initiatives in flight across fraud detection, KYC automation, and customer service. Of these, 11 are stuck in pilot phase \u2014 unable to reach production due to three recurring blockers: (1) Regulatory compliance concerns around model bias and explainability under EU AI Act, (2) No systematic process for validating AI model behaviour before go-live, (3) Lack of engineering capacity to bridge the gap between data science outputs and production-grade deployment. This programme directly addresses all three."
+    },
+    {
+      "id": "solution",
+      "title": "Our Solution",
+      "keywords": [
+        "solution",
+        "approach",
+        "how will you",
+        "methodology",
+        "what will you do",
+        "deliver",
+        "service",
+        "offering",
+        "provide",
+        "tell me about the solution",
+        "your solution",
+        "the solution",
+        "three phases",
+        "phases"
+      ],
+      "content": "The programme is structured in three phases. Phase 1 (Months 1-3): AI Assurance Foundation \u2014 we deploy an AI governance framework, establish eval suites for bias detection and hallucination testing, and onboard the forward deployed engineering team. Phase 2 (Months 4-9): Production Deployment \u2014 we take EuroBank's two highest-priority AI initiatives (fraud detection and KYC automation) from pilot to production, with full assurance coverage. Phase 3 (Months 10-12): Scale & Embed \u2014 we train EuroBank's internal team, transfer the governance framework, and establish ongoing AI assurance practices. All three phases run under continuous stakeholder governance with fortnightly executive reporting."
+    },
+    {
+      "id": "ai_assurance",
+      "title": "AI Assurance Framework",
+      "keywords": [
+        "assurance",
+        "governance",
+        "guardrails",
+        "bias",
+        "hallucination",
+        "explainability",
+        "risk",
+        "safety",
+        "responsible",
+        "ethical",
+        "fairness",
+        "eu ai act",
+        "regulation",
+        "compliance",
+        "audit",
+        "validate",
+        "handle bias",
+        "how do you handle",
+        "bias detection",
+        "ai safety",
+        "model risk",
+        "ai risk"
+      ],
+      "content": "Our AI Assurance Framework covers five dimensions: (1) Bias Detection \u2014 automated testing across protected characteristics with red-teaming protocols, (2) Hallucination Prevention \u2014 output validation pipelines with confidence scoring and human-in-the-loop escalation for low-confidence responses, (3) Explainability \u2014 SHAP and LIME-based model explanation layers compliant with EU AI Act Article 13 requirements, (4) Guardrails \u2014 input/output filtering, prompt injection defence, and policy enforcement layers, (5) Continuous Monitoring \u2014 real-time model drift detection with automated alerting. All framework components are documented to satisfy ECB supervisory expectations for AI in banking."
+    },
+    {
+      "id": "team",
+      "title": "Proposed Team",
+      "keywords": [
+        "our team",
+        "the team",
+        "who leads",
+        "engagement manager",
+        "fde",
+        "engineers",
+        "staff",
+        "resources",
+        "who will work",
+        "infosys team",
+        "programme team",
+        "delivery team",
+        "people",
+        "who is on",
+        "team members",
+        "headcount"
+      ],
+      "content": "The engagement is led by an FDE Engagement Manager with 20+ years of enterprise AI deployment experience across European financial services. The core team comprises: 1 FDE Engagement Manager (full-time, client-facing), 2 Forward Deployed Engineers embedded at EuroBank (full-time on-site), 1 AI Assurance Architect (50% on-site), 1 Data Engineer (full-time), and 1 MLOps Engineer (full-time). The team is supported by the AI Centre of Excellence in Edinburgh and Amsterdam. All team members hold relevant cloud certifications and have prior banking sector experience."
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline & Milestones",
+      "keywords": [
+        "timeline",
+        "schedule",
+        "when",
+        "duration",
+        "how long",
+        "milestone",
+        "phases",
+        "start",
+        "end",
+        "date",
+        "month",
+        "weeks",
+        "delivery",
+        "go live",
+        "go-live",
+        "what is the timeline",
+        "programme timeline"
+      ],
+      "content": "The programme runs for 12 months from contract signature. Key milestones: Month 1 \u2014 Team onboarded, governance framework design complete. Month 3 \u2014 AI Assurance Foundation deployed, first eval suite live. Month 6 \u2014 Fraud detection model in production (Phase 2 milestone 1). Month 9 \u2014 KYC automation in production (Phase 2 milestone 2). Month 10 \u2014 Internal team training begins. Month 12 \u2014 Full handover complete, EuroBank operating independently. All milestone dates are contractually binding with financial penalties for material delays on the vendor's part."
+    },
+    {
+      "id": "investment",
+      "title": "Investment & Pricing",
+      "keywords": [
+        "cost",
+        "price",
+        "investment",
+        "fee",
+        "budget",
+        "how much",
+        "euro",
+        "payment",
+        "commercial",
+        "value",
+        "roi",
+        "return",
+        "return on investment",
+        "what is the roi",
+        "payback",
+        "savings",
+        "financial"
+      ],
+      "content": "Total programme investment is \u20ac2.4M over 12 months, structured as: Phase 1 \u2014 \u20ac480K, Phase 2 \u2014 \u20ac1.2M, Phase 3 \u2014 \u20ac720K. Payment terms are monthly in arrears with a 10% retention released on successful completion of each phase milestone. The investment delivers an expected ROI of 340% over 3 years: \u20ac3.2M in fraud loss reduction, \u20ac1.8M in operational savings from KYC automation, and \u20ac2.1M in avoided regulatory penalties. the vendor offers a performance guarantee: if Phase 2 milestones are not achieved, fees are reduced by 20%."
+    },
+    {
+      "id": "technology",
+      "title": "Technology Stack",
+      "keywords": [
+        "technology",
+        "tech",
+        "stack",
+        "tools",
+        "platform",
+        "cloud",
+        "aws",
+        "azure",
+        "google",
+        "infrastructure",
+        "architecture",
+        "llm",
+        "model",
+        "ai model"
+      ],
+      "content": "The programme is cloud-agnostic and integrates with EuroBank's existing Azure infrastructure. Core components: LLM layer \u2014 Azure OpenAI GPT-4o for customer-facing applications, fine-tuned models for internal operations. Eval framework \u2014 custom Python evaluation suite with Promptflow integration. MLOps \u2014 Azure ML for model lifecycle management, Databricks for feature engineering. Monitoring \u2014 Azure Monitor with custom AI-specific dashboards for model performance, drift, and cost (AI FinOps). Data \u2014 all customer data remains within EuroBank's Azure tenant; no data leaves the bank's environment. the QE AI Platform provides the assurance layer on top of the existing stack."
+    },
+    {
+      "id": "risk",
+      "title": "Risk Management",
+      "keywords": [
+        "risk",
+        "risks",
+        "failure",
+        "what if",
+        "concern",
+        "worry",
+        "problem",
+        "issue",
+        "mitigate",
+        "contingency",
+        "pilot fail",
+        "unsuccessful",
+        "what are the risks",
+        "programme risks",
+        "risk management",
+        "risk mitigation"
+      ],
+      "content": "We have identified four key programme risks and mitigations: (1) Data quality risk \u2014 mitigated by a 4-week data audit in Month 1 before any model development begins. (2) Regulatory change risk \u2014 our framework is designed to EU AI Act standards with a 6-month buffer; we monitor ECB guidance continuously. (3) Internal adoption risk \u2014 dedicated change management workstream and EuroBank steering committee governance. (4) Model performance risk \u2014 all models go through three rounds of evaluation before production; go/no-go decision is joint between the vendor and EuroBank. If a model does not meet agreed performance thresholds, the vendor will not recommend go-live regardless of schedule pressure."
+    },
+    {
+      "id": "why_infosys",
+      "title": "Why the vendor",
+      "keywords": [
+        "why infosys",
+        "why you",
+        "why choose",
+        "differentiator",
+        "unique",
+        "experience",
+        "credentials",
+        "track record",
+        "references",
+        "clients",
+        "similar",
+        "case study",
+        "choose infosys",
+        "select infosys"
+      ],
+      "content": "the vendor has delivered AI assurance programmes for 7 of the top 20 European banks in the past 3 years. Specific credentials for EuroBank: (1) We deployed an AI governance framework for a Tier 1 Dutch bank that passed DNB supervisory review first time. (2) We took a fraud detection model from pilot to production in 6 months for a UK retail bank, achieving 34% reduction in false positives. (3) Our forward deployed model \u2014 engineers embedded inside the client \u2014 has a 94% renewal rate because we treat customer outcomes as our own. References available on request under NDA."
+    },
+    {
+      "id": "next_steps",
+      "title": "Next Steps",
+      "keywords": [
+        "next steps",
+        "next",
+        "proceed",
+        "start",
+        "sign",
+        "contract",
+        "decision",
+        "commitment",
+        "move forward",
+        "agree"
+      ],
+      "content": "To proceed, we propose the following next steps: (1) Executive alignment meeting within 2 weeks \u2014 90-minute session with EuroBank CTO, Chief Risk Officer, and the vendor FDE Engagement Manager to confirm programme scope and success criteria. (2) Legal review of contract terms \u2014 standard 3-week process; the vendor legal team available to expedite. (3) Contract signature \u2014 target within 6 weeks of this proposal. (4) Programme kickoff \u2014 2 weeks after signature. the vendor can hold the proposed team allocation for 8 weeks from this proposal date."
+    }
+  ],
+  "out_of_scope": [
+    "personal information about individuals",
+    "internal the vendor pricing structures",
+    "competitor information",
+    "questions unrelated to this proposal"
+  ]
+}
