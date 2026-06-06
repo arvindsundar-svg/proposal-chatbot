@@ -465,82 +465,9 @@
 
   /* ── RESPONSIVE ── */
   @media(max-width: 700px) {
-    body { height: 100dvh; }
-
-    .header { height: 52px; padding: 0 14px; }
-    .header-info h1 { font-size: .82rem; }
-    .header-info p { display: none; }
-    .header-right { gap: 5px; }
-    .doc-badge { display: none; }
-    .client-badge { font-size: .62rem; padding: 3px 7px; }
-
-    .main { flex-direction: column; }
     .sidebar { display: none; }
-
-    /* Mobile tab bar */
-    .mobile-tabs {
-      display: flex !important;
-      background: var(--navy2);
-      border-bottom: 1px solid var(--line);
-      flex-shrink: 0;
-    }
-
-    .chat-area { flex: 1; min-height: 0; }
-    .messages { padding: 12px; gap: 14px; }
-    .message { max-width: 100%; }
-    .msg-bubble { font-size: .82rem; padding: 10px 12px; }
-    .msg-avatar { width: 26px; height: 26px; font-size: .75rem; }
-
-    .welcome { padding: 12px 14px; }
-    .welcome h2 { font-size: .95rem; }
-    .welcome p { font-size: .78rem; }
-
-    .input-area { padding: 10px 12px 14px; }
-    .input-hint { display: none; }
-    textarea#query-input { min-height: 44px; font-size: .85rem; }
-
-    /* Mobile questions panel */
-    .mobile-questions {
-      display: none;
-      flex-direction: column;
-      padding: 12px;
-      gap: 6px;
-      overflow-y: auto;
-      flex: 1;
-    }
-    .mobile-questions.active { display: flex !important; }
-    .chat-area.hidden { display: none; }
-  }
-
-  @media(min-width: 701px) {
-    .mobile-tabs { display: none; }
-    .mobile-questions { display: none !important; }
-  }
-
-  .mobile-tabs {
-    display: none;
-  }
-  .mobile-tab {
-    flex: 1;
-    padding: 10px;
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-    font-size: .75rem;
-    font-weight: 600;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all .2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-  }
-  .mobile-tab.active {
-    color: var(--accent2);
-    border-bottom-color: var(--accent);
-    background: rgba(200,65,10,.06);
+    .messages { padding: 16px; }
+    .input-area { padding: 12px 16px 16px; }
   }
 </style>
 </head>
@@ -559,20 +486,6 @@
     <span class="client-badge">{{ proposal.client }}</span>
     <span class="doc-badge">{{ proposal.confidentiality }}</span>
   </div>
-</div>
-
-<!-- MOBILE TABS -->
-<div class="mobile-tabs" id="mobileTabs">
-  <button class="mobile-tab active" id="tabChat" onclick="switchTab('chat')">💬 Chat</button>
-  <button class="mobile-tab" id="tabQuestions" onclick="switchTab('questions')">❓ Questions</button>
-</div>
-
-<!-- MOBILE QUESTIONS PANEL -->
-<div class="mobile-questions" id="mobileQuestions">
-  <div style="font-size:.68rem;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;font-family:'DM Mono',monospace;">Suggested Questions</div>
-  {% for q in questions %}
-  <button class="sq-btn" onclick="askMobile('{{ q }}')">{{ q }}</button>
-  {% endfor %}
 </div>
 
 <!-- MAIN -->
@@ -796,31 +709,6 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.appendChild(document.createTextNode(text));
   return div.innerHTML;
-}
-
-// Mobile tab switching
-function switchTab(tab) {
-  const chatArea = document.querySelector('.chat-area');
-  const questions = document.getElementById('mobileQuestions');
-  const tabChat = document.getElementById('tabChat');
-  const tabQ = document.getElementById('tabQuestions');
-  if (tab === 'chat') {
-    chatArea.classList.remove('hidden');
-    questions.classList.remove('active');
-    tabChat.classList.add('active');
-    tabQ.classList.remove('active');
-  } else {
-    chatArea.classList.add('hidden');
-    questions.classList.add('active');
-    tabChat.classList.remove('active');
-    tabQ.classList.add('active');
-  }
-}
-
-function askMobile(q) {
-  switchTab('chat');
-  inputEl.value = q;
-  sendMessage();
 }
 
 // Focus input on load
