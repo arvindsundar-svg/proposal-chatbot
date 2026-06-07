@@ -41,6 +41,17 @@ body {
   overflow: hidden;
 }
 
+/* ── MOBILE BODY OVERRIDE ── */
+@media(max-width:700px){
+  body {
+    height: auto !important;
+    min-height: 100dvh;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 /* ── HEADER ── */
 header {
   background: var(--surface);
@@ -433,23 +444,66 @@ textarea#inp::placeholder { color:var(--text3); }
 
 /* ── MOBILE ── */
 @media(max-width:700px){
-  body{height:100dvh;}
-  header{height:50px;padding:0 14px;}
+  header{position:sticky;top:0;z-index:100;height:50px;padding:0 14px;}
   .brand-text p{display:none;}
   .badge.conf{display:none;}
-  .mobile-tabs{display:flex;}
-  .layout{flex-direction:column;}
-  .sidebar{display:none;}
-  .sidebar.mob-active{display:flex;width:100%;height:100%;border-right:none;}
+
+  .mobile-tabs{
+    display:flex;
+    position:sticky;top:50px;z-index:99;
+  }
+
+  .layout{
+    flex-direction:column;
+    flex:none;
+    min-height:0;
+  }
+
+  /* Sidebar becomes a full panel shown/hidden */
+  .sidebar{
+    display:none;
+    width:100%;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+    max-height:none;
+    overflow:visible;
+  }
+  .sidebar.mob-active{display:flex;}
+
+  /* Chat area becomes natural height — no fixed scroll trap */
+  .chat-area{
+    flex:none;
+    display:flex;
+    flex-direction:column;
+  }
   .chat-area.mob-hidden{display:none;}
-  .messages{padding:14px;}
+
+  /* Messages: no overflow — let page scroll */
+  .messages{
+    flex:none;
+    overflow:visible;
+    padding:14px;
+    gap:16px;
+    min-height:0;
+  }
+
+  /* Input stays at bottom of page flow */
+  .input-area{
+    position:sticky;
+    bottom:0;
+    z-index:98;
+    padding:10px 12px 14px;
+    background:var(--surface);
+  }
+  .input-hint{display:none;}
+
   .bubble{font-size:.82rem;}
   .stat-grid{grid-template-columns:1fr 1fr;}
   .team-grid{grid-template-columns:1fr;}
   .pillars{grid-template-columns:1fr;}
   .tech-grid{grid-template-columns:1fr;}
-  .input-area{padding:10px 12px 14px;}
-  .input-hint{display:none;}
+  .q-list{overflow:visible;padding:12px;}
+  .sidebar .q-list{max-height:40vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 }
 </style>
 </head>
@@ -962,13 +1016,23 @@ const RICH_RESPONSES = {
   }
 };
 
-// ── CLEAR PREVIOUS BOT ANSWER ──
+// ── CLEAR PREVIOUS ANSWER + QUESTION ──
 function clearPreviousAnswer() {
-  msgsEl.querySelectorAll('.msg.bot').forEach(m => m.remove());
+  // Remove all messages except the welcome card
+  msgsEl.querySelectorAll('.msg.bot, .msg.user').forEach(m => m.remove());
   const t = document.getElementById('typing'); if(t) t.remove();
 }
 
-// ── SEND ──
+function scroll() {
+  requestAnimationFrame(() => {
+    // On mobile, scroll the page; on desktop scroll the messages div
+    if (window.innerWidth <= 700) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } else {
+      msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+    }
+  });
+}
 async function send() {
   const q = inpEl.value.trim();
   if (!q || busy) return;
