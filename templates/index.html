@@ -41,7 +41,35 @@ body {
   overflow: hidden;
 }
 
-/* ── MOBILE BODY OVERRIDE ── */
+/* ── SUGGESTION DROPDOWN ── */
+.suggest-box {
+  display:none;
+  flex-direction:column;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:6px;
+  box-shadow:0 -4px 20px rgba(0,0,0,.3);
+}
+.suggest-box.visible { display:flex; }
+.suggest-item {
+  padding:10px 14px;
+  font-size:.82rem;
+  color:var(--text2);
+  cursor:pointer;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+  transition:all .15s;
+}
+.suggest-item:last-child { border-bottom:none; }
+.suggest-item:hover, .suggest-item.highlighted {
+  background:var(--surface3);
+  color:var(--text);
+}
+.suggest-item .suggest-icon { color:var(--accent); font-size:.75rem; flex-shrink:0; }
+.suggest-match { color:var(--accent2); font-weight:600; }
+
 @media(max-width:700px){
   body {
     height: auto !important;
@@ -587,6 +615,7 @@ textarea#inp::placeholder { color:var(--text3); }
     </div>
 
     <div class="input-area">
+      <div class="suggest-box" id="suggestBox"></div>
       <div class="input-inner">
         <textarea id="inp" rows="1" placeholder="Ask anything about this proposal..."></textarea>
         <button class="send-btn" id="sendBtn" onclick="send()">➤</button>
@@ -598,36 +627,146 @@ textarea#inp::placeholder { color:var(--text3); }
 </div>
 
 <script>
-const msgsEl = document.getElementById('msgs');
-const inpEl  = document.getElementById('inp');
-const sendBt = document.getElementById('sendBtn');
+const msgsEl  = document.getElementById('msgs');
+const inpEl   = document.getElementById('inp');
+const sendBt  = document.getElementById('sendBtn');
+const suggestBox = document.getElementById('suggestBox');
 let busy = false;
+let highlightIdx = -1;
 
-// ── AUTO-RESIZE TEXTAREA ──
+// All questions available for suggestion matching
+const ALL_QUESTIONS = [
+  "What is this proposal about?",
+  "What problem are you solving?",
+  "What is the solution?",
+  "What is the timeline?",
+  "How much does it cost?",
+  "What is the ROI?",
+  "Who is on the team?",
+  "How do you handle AI bias and hallucinations?",
+  "What technology do you use?",
+  "What are the risks?",
+  "Why should we choose you?",
+  "What are the next steps?",
+];
+
+// ── AUTOCOMPLETE ──────────────────────────────────────────────
+function getSuggestions(query) {
+  if (!query || query.length < 2) return [];
+  const q = query.toLowerCase();
+  return ALL_QUESTIONS.filter(s =>
+    s.toLowerCase().includes(q)
+  ).slice(0, 4);
+}
+
+function highlightMatch(text, query) {
+  const idx = text.toLowerCase().indexOf(query.toLowerCase());
+  if (idx === -1) return esc(text);
+  return esc(text.slice(0, idx))
+    + `<span class="suggest-match">${esc(text.slice(idx, idx + query.length))}</span>`
+    + esc(text.slice(idx + query.length));
+}
+
+function showSuggestions(query) {
+  const matches = getSuggestions(query);
+  highlightIdx = -1;
+  if (!matches.length) {
+    suggestBox.classList.remove('visible');
+    suggestBox.innerHTML = '';
+    return;
+  }
+  suggestBox.innerHTML = matches.map((s, i) =>
+    `<div class="suggest-item" data-idx="${i}" onclick="pickSuggestion('${s.replace(/'/g,"\\'")}')">
+      <span class="suggest-icon">?</span>
+      <span>${highlightMatch(s, query)}</span>
+    </div>`
+  ).join('');
+  suggestBox.classList.add('visible');
+}
+
+function hideSuggestions() {
+  suggestBox.classList.remove('visible');
+  suggestBox.innerHTML = '';
+  highlightIdx = -1;
+}
+
+function pickSuggestion(q) {
+  inpEl.value = q;
+  hideSuggestions();
+  send();
+}
+
+function navigateSuggestions(dir) {
+  const items = suggestBox.querySelectorAll('.suggest-item');
+  if (!items.length) return false;
+  items.forEach(i => i.classList.remove('highlighted'));
+  highlightIdx = (highlightIdx + dir + items.length) % items.length;
+  items[highlightIdx].classList.add('highlighted');
+  return true;
+}
+
+// ── AUTO-RESIZE + SUGGESTION TRIGGER ──
 inpEl.addEventListener('input', () => {
   inpEl.style.height = 'auto';
   inpEl.style.height = Math.min(inpEl.scrollHeight, 100) + 'px';
-});
-inpEl.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  showSuggestions(inpEl.value.trim());
 });
 
-function ask(q) { inpEl.value = q; send(); }
+inpEl.addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); navigateSuggestions(1); return; }
+  if (e.key === 'ArrowUp')   { e.preventDefault(); navigateSuggestions(-1); return; }
+  if (e.key === 'Tab' && suggestBox.classList.contains('visible')) {
+    e.preventDefault();
+    const highlighted = suggestBox.querySelector('.highlighted') || suggestBox.querySelector('.suggest-item');
+    if (highlighted) pickSuggestion(highlighted.textContent.trim());
+    return;
+  }
+  if (e.key === 'Enter') {
+    if (highlightIdx >= 0 && suggestBox.classList.contains('visible')) {
+      e.preventDefault();
+      const highlighted = suggestBox.querySelector('.highlighted');
+      if (highlighted) { pickSuggestion(highlighted.dataset ? ALL_QUESTIONS[parseInt(highlighted.dataset.idx)] : highlighted.textContent.trim()); }
+      return;
+    }
+    if (!e.shiftKey) { e.preventDefault(); hideSuggestions(); send(); }
+  }
+  if (e.key === 'Escape') hideSuggestions();
+});
+
+// Hide suggestions when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('.input-area')) hideSuggestions();
+});
+
+function ask(q) { inpEl.value = q; hideSuggestions(); send(); }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function scroll() {
   requestAnimationFrame(() => {
-    msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+    if (window.innerWidth <= 700) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    } else {
+      msgsEl.scrollTo({ top: msgsEl.scrollHeight, behavior: 'smooth' });
+    }
   });
 }
 
-async function typeText(el, text, speed=13) {
+// ── STREAMING TYPETEXT — word by word for natural feel ──
+async function typeText(el, text, speed=38) {
   el.textContent = '';
   el.classList.add('typing-cursor');
-  const chars = [...text];
-  for (let i = 0; i < chars.length; i++) {
-    el.textContent += chars[i];
-    if (i % 4 === 0) { scroll(); await sleep(speed); }
+  // Split into words, preserving spaces
+  const words = text.split(/(\s+)/);
+  for (let i = 0; i < words.length; i++) {
+    el.textContent += words[i];
+    // Pause slightly longer at punctuation for natural rhythm
+    const w = words[i].trim();
+    const delay = w.endsWith('.') || w.endsWith('—') ? speed * 3 :
+                  w.endsWith(',') || w.endsWith(':') ? speed * 1.5 : speed;
+    if (i % 2 === 0) { // only pause on actual words, not spaces
+      scroll();
+      await sleep(delay);
+    }
   }
   el.classList.remove('typing-cursor');
   scroll();
@@ -1040,6 +1179,7 @@ async function send() {
   sendBt.disabled = true;
   inpEl.value = '';
   inpEl.style.height = 'auto';
+  hideSuggestions();
 
   mobTab('chat');
 
